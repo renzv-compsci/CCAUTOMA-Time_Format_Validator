@@ -1,238 +1,68 @@
 # PHASE_ROADMAP
 
-## Phase 0: Scope Freeze and Project Skeleton
+## Phase 0: Theory, Artifacts, and Project Skeleton
 
 ### Objective
 
-Finalize the project scope and prepare the base structure.
+Finalize the project scope, establish the two-layer architecture policy, create the base folder skeleton, and complete all formal mathematical artifacts (Language, RE, NFA, DFA, Minimized DFA) and their corresponding data/diagram files.
 
 ### Tasks
 
-1. Confirm accepted time formats.
-2. Confirm normalization rules.
-3. Confirm rejected-input behavior.
-4. Confirm GUI layout.
-5. Confirm technology stack.
-6. Create folder skeleton.
-7. Create roadmap and system overview documents.
+1. Confirm scope, two-layer normalization policy, GUI layout, and tech stack.
+2. Create project folder skeleton and base planning docs (`System_Overview.md`, `DOC_TEAM_TWO_LAYER_GUIDE.md`).
+3. Define the Formal Language Specification (Alphabet $\Sigma_{TIME}$, sets, boundary cases).
+4. Design the Regular Expression (Formal algebraic and programming regex).
+5. Construct the NFA (States, transitions, diagram, JSON data).
+6. Perform NFA-to-DFA Conversion (Subset construction, dead state).
+7. Minimize the DFA (Partition refinement, merging equivalent states).
 
 ### Deliverables
 
-- Project folder structure.
-- `PHASE_ROADMAP.md`.
-- `System_Overview.md`.
-
-### Definition of Done
-
-- Scope is finalized.
-- Project skeleton exists.
-- Roadmap is approved.
-
-### Estimated Time
-
-30 minutes to 1 hour.
-
----
-
-## Phase 1: Formal Language Specification
-
-### Objective
-
-Define the exact language accepted by the system.
-
-### Tasks
-
-1. Define the alphabet.
-2. Define valid 24-hour time rules.
-3. Define valid 12-hour time rules.
-4. Define minute rules.
-5. Define AM/PM rules.
-6. Write the language using formal notation.
-7. Prepare accepted examples.
-8. Prepare rejected examples.
-
-### Deliverables
-
+- Project folder structure with all placeholders.
+- `docs/System_Overview.md` & `docs/DOC_TEAM_TWO_LAYER_GUIDE.md`
 - `docs/FORMAL_SPECIFICATION.md`
-
-### Definition of Done
-
-- Language is unambiguous.
-- Accepted examples are correct.
-- Rejected examples are correct.
-- Specification matches the approved scope.
-
-### Estimated Time
-
-30 minutes to 1 hour.
-
----
-
-## Phase 2: Regular Expression Design
-
-### Objective
-
-Create the regular expression equivalent of the formal language.
-
-### Tasks
-
-1. Write the 24-hour subexpression.
-2. Write the 12-hour subexpression.
-3. Combine both using union.
-4. Add anchors if needed.
-5. Expand optional operators if required.
-6. Test against accepted and rejected examples.
-
-### Deliverables
-
 - `docs/REGULAR_EXPRESSION.md`
+- `docs/NFA_SPECIFICATION.md` & `data/nfa.json` & `diagrams/nfa.dot`
+- `docs/DFA_SPECIFICATION.md` & `data/dfa.json` & `diagrams/dfa.dot`
+- `docs/MINIMIZED_DFA_SPECIFICATION.md` & `data/minimized_dfa.json` & `diagrams/minimized_dfa.dot`
 
 ### Definition of Done
 
-- Regular expression accepts all valid inputs.
-- Regular expression rejects all invalid inputs.
-- Expression can be explained theoretically.
+- Scope and two-layer policy are finalized and documented.
+- Project skeleton exists.
+- All formal mathematical artifacts are defined, cross-verified for equivalence, and saved in their respective `.md`, `.json`, and `.dot` files.
 
 ### Estimated Time
 
-30 minutes to 1 hour.
+4 to 6 hours.
 
 ---
 
-## Phase 3: NFA Construction
+## Phase 1: Core Validation Engine
 
 ### Objective
 
-Construct the NFA that recognizes the time language.
+Implement the backend logic, including the Alphabet Check (Layer 1), the Lexical Normalizer (Layer 2), and the Minimized DFA simulation.
 
 ### Tasks
 
-1. Identify subpatterns: hour, colon, minute, space, meridiem.
-2. Build NFA fragments.
-3. Combine fragments using union and concatenation.
-4. Define start state.
-5. Define accepting states.
-6. Prepare NFA transition table or description.
-7. Prepare NFA diagram if time permits.
+1. Implement `core/alphabet_check.py` (Layer 1 validation).
+2. Implement `core/normalizer.py` (Layer 2: N1 meridiem case-fold, N2 hour padding).
+3. Implement `core/automaton.py` (Minimized DFA transition table and state evaluation).
+4. Implement `core/trace.py` (Step-by-step state transition recording).
+5. Implement `core/diagnostics.py` (Rejection layer classification, failure position, and UX suggestions).
+6. Implement `core/samples.py` (Curated test inputs).
 
 ### Deliverables
 
-- `docs/NFA_SPECIFICATION.md`
-- Optional: `diagrams/nfa.dot`
-- Optional: `data/nfa.json`
+- Fully functional backend modules in the `core/` directory.
 
 ### Definition of Done
 
-- NFA correctly represents the language.
-- Start state is defined.
-- Accepting states are defined.
-- NFA can be explained during the demo.
-
-### Estimated Time
-
-1 to 2 hours.
-
----
-
-## Phase 4: NFA-to-DFA Conversion
-
-### Objective
-
-Convert the NFA into an equivalent DFA.
-
-### Tasks
-
-1. Perform subset construction.
-2. Name DFA states clearly.
-3. Identify DFA start state.
-4. Identify DFA accepting states.
-5. Create full DFA transition table.
-6. Add dead or trap state if needed.
-7. Prepare DFA diagram if time permits.
-
-### Deliverables
-
-- `docs/DFA_SPECIFICATION.md`
-- Optional: `diagrams/dfa.dot`
-- Optional: `data/dfa.json`
-
-### Definition of Done
-
-- DFA accepts the same language as the NFA.
-- Transition table is complete.
-- Dead state behavior is documented.
-
-### Estimated Time
-
-1.5 to 2.5 hours.
-
----
-
-## Phase 5: DFA Minimization
-
-### Objective
-
-Minimize the DFA and prove equivalence.
-
-### Tasks
-
-1. Separate accepting and non-accepting states.
-2. Apply partition refinement.
-3. Merge equivalent states.
-4. Produce minimized DFA transition table.
-5. Compare minimized DFA with original DFA.
-6. Prepare minimized DFA diagram if time permits.
-
-### Deliverables
-
-- `docs/MINIMIZED_DFA_SPECIFICATION.md`
-- Optional: `diagrams/minimized_dfa.dot`
-- Optional: `data/minimized_dfa.json`
-
-### Definition of Done
-
-- Minimized DFA accepts the same language.
-- No redundant states remain.
-- Minimization process can be explained.
-
-### Estimated Time
-
-1 to 2 hours.
-
----
-
-## Phase 6: Core Validation Engine
-
-### Objective
-
-Implement the validator using the minimized DFA.
-
-### Tasks
-
-1. Define alphabet in code.
-2. Define states.
-3. Define start state.
-4. Define accepting states.
-5. Define transition table.
-6. Implement trace generation.
-7. Implement accept/reject decision.
-8. Implement basic rejection reasons.
-9. Implement normalization logic.
-
-### Deliverables
-
-- `core/normalizer.py`
-- `core/automaton.py`
-- `core/trace.py`
-- `core/diagnostics.py`
-
-### Definition of Done
-
-- Valid 24-hour inputs are accepted.
-- Valid 12-hour inputs are accepted.
-- Invalid inputs are rejected.
-- Trace is generated.
-- Basic rejection reasons are generated.
+- Layer 1 correctly rejects invalid alphabet symbols.
+- Layer 2 correctly normalizes and validates human-friendly inputs.
+- The minimized DFA correctly accepts the 2,880 canonical strings.
+- Trace generation and diagnostic explanations work without crashing.
 
 ### Estimated Time
 
@@ -240,42 +70,32 @@ Implement the validator using the minimized DFA.
 
 ---
 
-## Phase 7: GUI Development
+## Phase 2: GUI Development
 
 ### Objective
 
-Build a clean and presentable user interface.
+Build the Streamlit front-end to display the dual-layer results, formal artifacts, and automaton traces.
 
 ### Tasks
 
-1. Create main app layout.
-2. Add input field.
-3. Add validate button.
-4. Add result banner.
-5. Add summary tab.
-6. Add formal language tab.
-7. Add automata tab.
-8. Add trace tab.
-9. Add test cases tab.
-10. Add sample input buttons.
+1. Create main app layout (`app.py` and `ui/layout.py`).
+2. Build Summary Tab (Dual-layer display: Raw vs Normalized results).
+3. Build Formal Language Tab (Display alphabet, rules, and regex).
+4. Build Automata Tab (Display NFA, DFA, and Minimized DFA tables/diagrams).
+5. Build Trace Tab (Display step-by-step simulation).
+6. Build Test Cases Tab (Display behavior matrix).
+7. Wire UI components to the Core Validation Engine.
 
 ### Deliverables
 
-- `app.py`
-- `ui/layout.py`
-- `ui/summary_tab.py`
-- `ui/formal_language_tab.py`
-- `ui/automata_tab.py`
-- `ui/trace_tab.py`
-- `ui/test_cases_tab.py`
+- Fully functional Streamlit application in the `ui/` directory and `app.py`.
 
 ### Definition of Done
 
-- User can enter input.
-- User can validate input.
-- Result is displayed clearly.
-- All required artifacts are displayed.
-- GUI is ready for demonstration.
+- User can enter input and trigger validation.
+- Both Layer 1 and Layer 2 results are clearly displayed.
+- All formal artifacts and traces render correctly in their respective tabs.
+- GUI is stable and ready for live demonstration.
 
 ### Estimated Time
 
@@ -283,36 +103,30 @@ Build a clean and presentable user interface.
 
 ---
 
-## Phase 8: Testing and Demonstration Preparation
+## Phase 3: Testing and Demonstration Preparation
 
 ### Objective
 
-Ensure the system works reliably for presentation.
+Ensure the system is bug-free, handles edge cases gracefully, and is fully prepared for the live panel defense.
 
 ### Tasks
 
-1. Create accepted test cases.
-2. Create rejected test cases.
-3. Test normalization cases.
-4. Test edge cases.
-5. Prepare sample inputs.
-6. Prepare demo script.
-7. Fix critical UI issues.
-8. Verify all tabs display correctly.
+1. Write unit tests for the alphabet check, normalizer, and automaton.
+2. Verify all 9 cases in the Behavior Matrix.
+3. Test boundary cases (`00:00`, `12:00 AM`, `23:59`, `13:00 PM`).
+4. Fix any critical UI or logic bugs discovered during testing.
+5. Write the final `docs/TEST_PLAN.md` and `docs/DEMO_SCRIPT.md`.
 
 ### Deliverables
 
-- `docs/TEST_PLAN.md`
-- `docs/DEMO_SCRIPT.md`
-- `core/samples.py`
-- `tests/`
+- `tests/` directory with passing pytest scripts.
+- `docs/TEST_PLAN.md` and `docs/DEMO_SCRIPT.md`.
 
 ### Definition of Done
 
-- Must-have test cases pass.
-- Demo runs smoothly.
-- Rejection explanations are understandable.
-- No critical crash occurs during normal use.
+- All unit tests and behavior matrix tests pass.
+- Demo script is written and rehearsed.
+- No critical crashes occur during normal or malicious input.
 
 ### Estimated Time
 
@@ -320,35 +134,30 @@ Ensure the system works reliably for presentation.
 
 ---
 
-## Phase 9: Documentation and Final Polish
+## Phase 4: Final Polish and Submission
 
 ### Objective
 
-Prepare the final submission and presentation.
+Finalize all documentation, polish the UI wording, and prepare the repository for final submission and grading.
 
 ### Tasks
 
-1. Complete formal specification documentation.
-2. Include regular expression.
-3. Include NFA.
-4. Include DFA.
-5. Include minimized DFA.
-6. Include sample results.
-7. Write conclusion.
-8. Explain equivalence between representations.
-9. Polish GUI labels and wording.
+1. Review all `docs/` for consistency, formatting, and alignment with the two-layer policy.
+2. Polish GUI labels, colors, and explanations for maximum clarity.
+3. Update the root `README.md` with final project status, setup instructions, and execution commands.
+4. Final git cleanup and branch merging.
 
 ### Deliverables
 
 - Completed documentation set.
-- Final README.
-- Final demo-ready application.
+- Final `README.md`.
+- Clean, demo-ready `main` branch.
 
 ### Definition of Done
 
-- Project looks complete.
-- Theory is clearly connected to implementation.
-- System can be demonstrated within a few minutes.
+- Project looks complete and professional.
+- Theory is clearly connected to the implementation.
+- System can be demonstrated smoothly within 5 minutes.
 
 ### Estimated Time
 
